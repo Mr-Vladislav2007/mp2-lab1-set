@@ -10,17 +10,38 @@
 // Fake variables used as placeholders in tests
 static const int FAKE_INT = -1;
 static TBitField FAKE_BITFIELD(1);
+static size_t SIZE = sizeof(TELEM) * 8;
 
 TBitField::TBitField(int len)
 {
+    BitLen = len;
+
+    if (len < SIZE)
+        MemLen = 1;
+    else
+        MemLen = (len - 1) / SIZE + 1;
+
+    //MemLen = len / SIZE + (len % SIZE > 0); ???????????????
+
+    pMem = new TELEM[BitLen];
+
+    std::memset(pMem, 0, sizeof(TELEM) * MemLen);
+
 }
 
 TBitField::TBitField(const TBitField &bf) // конструктор копирования
 {
+    this->BitLen = bf.BitLen;
+    this->pMem = new TELEM[bf.BitLen];
+    this->MemLen = bf.MemLen;
+
+    for (int i = 0; i < this->MemLen; i++)
+        this->pMem[i] = bf.pMem[i];
 }
 
 TBitField::~TBitField()
 {
+    delete[] pMem;
 }
 
 int TBitField::GetMemIndex(const int n) const // индекс Мем для бита n
@@ -57,7 +78,20 @@ int TBitField::GetBit(const int n) const // получить значение б
 
 TBitField& TBitField::operator=(const TBitField &bf) // присваивание
 {
-    return FAKE_BITFIELD;
+    if (this == &bf)
+        return *this;
+
+    this->BitLen = bf.BitLen;
+    this->MemLen = bf.MemLen;
+
+    delete[] this->pMem;
+
+    this->pMem = new TELEM[bf.BitLen];
+    for (int i = 0; i < bf.BitLen; i++)
+        this->pMem[i] = bf.pMem[i];
+
+
+    return *this;
 }
 
 int TBitField::operator==(const TBitField &bf) const // сравнение
