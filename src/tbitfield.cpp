@@ -46,32 +46,52 @@ TBitField::~TBitField()
 
 int TBitField::GetMemIndex(const int n) const // индекс Мем для бита n
 {
-    return FAKE_INT;
+    return (n / SIZE) + ((n % SIZE) != 0);
 }
 
 TELEM TBitField::GetMemMask(const int n) const // битовая маска для бита n
 {
-    return FAKE_INT;
+    if (n < 0 || n >= BitLen)
+        throw n;
+
+    return (1 << (n & (SIZE - 1)));
 }
 
 // доступ к битам битового поля
 
 int TBitField::GetLength(void) const // получить длину (к-во битов)
 {
-  return FAKE_INT;
+    return BitLen;
 }
 
 void TBitField::SetBit(const int n) // установить бит
 {
+    if (n >= 0 && n < BitLen)
+    {
+        TELEM mask = GetMemMask(n);
+        pMem[GetMemIndex(n)] |= mask;
+    }
 }
 
 void TBitField::ClrBit(const int n) // очистить бит
 {
+    if (n >= 0 && n < BitLen)
+    {
+        TELEM mask = GetMemMask(n);
+        pMem[GetMemIndex(n)] &= ~mask;
+    }
 }
 
 int TBitField::GetBit(const int n) const // получить значение бита
 {
-  return FAKE_INT;
+    if (n < 0 || n >= BitLen)
+        throw;
+    if (n >= 0 && n < BitLen)
+    {
+        TELEM mask = GetMemMask(n);
+        return (pMem[GetMemIndex(n) & mask]) != 0;
+    }
+    return 0;
 }
 
 // битовые операции
@@ -128,5 +148,10 @@ istream &operator>>(istream &istr, TBitField &bf) // ввод
 
 ostream &operator<<(ostream &ostr, const TBitField &bf) // вывод
 {
+    for (int i = bf.GetLength() - 1; i >= 0; i--)
+    {
+        ostr << bf.GetBit(i);
+    }
+
     return ostr;
 }
