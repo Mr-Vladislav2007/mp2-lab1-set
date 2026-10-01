@@ -6,6 +6,7 @@
 // Битовое поле
 
 #include "tbitfield.h"
+#include <locale>
 
 // Fake variables used as placeholders in tests
 static const int FAKE_INT = -1;
@@ -20,8 +21,6 @@ TBitField::TBitField(int len)
         MemLen = 1;
     else
         MemLen = (len - 1) / SIZE + 1;
-
-    //MemLen = len / SIZE + (len % SIZE > 0); ???????????????
 
     pMem = new TELEM[BitLen];
 
@@ -51,8 +50,8 @@ int TBitField::GetMemIndex(const int n) const // индекс Мем для би
 
 TELEM TBitField::GetMemMask(const int n) const // битовая маска для бита n
 {
-    if (n < 0 || n >= BitLen)
-        throw n;
+    /*if (n < 0 || n >= BitLen)
+        throw n;*/
 
     return (1 << (n & (SIZE - 1)));
 }
@@ -66,8 +65,8 @@ int TBitField::GetLength(void) const // получить длину (к-во б�
 
 void TBitField::SetBit(const int n) // установить бит
 {
-    if (n < 0 || n >= BitLen)
-        throw n;
+    /*if (n < 0 || n >= BitLen)
+        throw n;*/
     if (n >= 0 && n < BitLen)
     {
         TELEM mask = GetMemMask(n);
@@ -77,8 +76,8 @@ void TBitField::SetBit(const int n) // установить бит
 
 void TBitField::ClrBit(const int n) // очистить бит
 {
-    if (n < 0 || n >= BitLen)
-        throw n;
+    /*if (n < 0 || n >= BitLen)
+        throw n;*/
     if (n >= 0 && n < BitLen)
     {
         TELEM mask = GetMemMask(n);
@@ -88,8 +87,8 @@ void TBitField::ClrBit(const int n) // очистить бит
 
 int TBitField::GetBit(const int n) const // получить значение бита
 {
-    if (n < 0 || n >= BitLen)
-        throw n;
+    /*if (n < 0 || n >= BitLen)
+        throw n;*/
     if (n >= 0 && n < BitLen)
     {
         TELEM mask = GetMemMask(n);
@@ -235,3 +234,75 @@ ostream &operator<<(ostream &ostr, const TBitField &bf) // вывод
 
     return ostr;
 }
+
+
+
+
+//
+//#include <iostream>
+//#include "tbitfield.h"
+//#include <locale>
+//
+//void testTBitField()
+//{
+//    setlocale(LC_ALL, "Russian");
+//    {
+//        TBitField bf(8);
+//        cout << "The length of the bit field: " << bf.GetLength() << endl;
+//
+//        for (int i = 0; i < 8; i++)
+//            bf.SetBit(i);
+//
+//        cout << "The bit field after setting all bits: ";
+//        cout << bf << endl;
+//    }
+//
+//    {
+//        TBitField bf(8);
+//
+//        bf.SetBit(3);
+//        cout << "The bit field after setting the 4th bit: " << bf << endl;
+//
+//        bf.ClrBit(3);
+//        cout << "The bit field after clearing the 4th bit: " << bf << endl;
+//    }
+//
+//    {
+//        TBitField bf1(8), bf2(8);
+//        bf1.SetBit(0);
+//        bf1.SetBit(1);
+//        bf2.SetBit(2);
+//        bf2.SetBit(3);
+//
+//        cout << "The first beaten field: " << bf1 << endl;
+//        cout << "The second beaten field: " << bf2 << endl;
+//
+//        TBitField bfOr = bf1 | bf2;
+//        cout << "Bitwise OR: " << bfOr << endl;
+//
+//        TBitField bfAnd = bf1 & bf2;
+//        cout << "Bitwise AND: " << bfAnd << endl;
+//
+//        TBitField bfNot = ~bf1;
+//        cout << "Negation of the first field: " << bfNot << endl;
+//    }
+//
+//    {
+//        TBitField bf(8);
+//        cout << "Enter the bit sting: ";
+//        cin >> bf;
+//
+//        cout << "The entered bit field: " << bf << endl;
+//    }
+//}
+//
+//int main()
+//{
+//    setlocale(LC_ALL, "Russian");
+//    cout << "Class testing TBitField" << endl;
+//
+//    testTBitField();
+//    cout << endl << "The testing has been completed successfully!" << endl;
+//
+//    return 0;
+//}
