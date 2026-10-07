@@ -1,16 +1,16 @@
-﻿// ННГУ, ВМК, Курс "Методы программирования-2", С++, ООП
+﻿// ннгу, вмк, курс "методы программирования-2", с++, ооп
 //
-// sample_prime_numbers.cpp - Copyright (c) Гергель В.П. 20.08.2000
-//   Переработано для Microsoft Visual Studio 2008 Сысоевым А.В. (19.04.2015)
+// sample_prime_numbers.cpp - copyright (c) гергель в.п. 20.08.2000
+//   переработано для microsoft visual studio 2008 сысоевым а.в. (19.04.2015)
 //
-// Тестирование битового поля и множества
+// тестирование битового поля и множества
 
 #include <iomanip>
 
-// #define USE_SET // Использовать класс TSet,
+// #define use_set // использовать класс tset,
                 // закоментировать, чтобы использовать битовое поле
 
-#ifndef USE_SET // Использовать класс TBitField
+#ifndef use_set // использовать класс tbitfield
 
 #include "tbitfield.h"
 
@@ -18,10 +18,10 @@ int main()
 {
   int n, m, k, count;
 
-  setlocale(LC_ALL, "Russian");
-  cout << "Тестирование программ поддержки битового поля" << endl;
-  cout << "             Решето Эратосфена" << endl;
-  cout << "Введите верхнюю границу целых значений - ";
+  setlocale(LC_ALL, "russian");
+  cout << "тестирование программ поддержки битового поля" << endl;
+  cout << "             решето эратосфена" << endl;
+  cout << "введите верхнюю границу целых значений - ";
   cin  >> n;
   TBitField s(n + 1);
   // заполнение множества
@@ -35,8 +35,8 @@ int main()
         if (s.GetBit(k))
           s.ClrBit(k);
   // оставшиеся в s элементы - простые числа
-  cout << endl << "Печать множества некратных чисел" << endl << s << endl;
-  cout << endl << "Печать простых чисел" << endl;
+  cout << endl << "печать множества некратных чисел" << endl << s << endl;
+  cout << endl << "печать простых чисел" << endl;
   count = 0;
   k = 1;
   for (m = 2; m <= n; m++)
@@ -48,7 +48,7 @@ int main()
         cout << endl;
     }
   cout << endl;
-  cout << "В первых " << n << " числах " << count << " простых" << endl;
+  cout << "в первых " << n << " числах " << count << " простых" << endl;
 }
 #else
 
@@ -58,29 +58,29 @@ int main()
 {
   int n, m, k, count;
 
-  setlocale(LC_ALL, "Russian");
-  cout << "Тестирование программ поддержки множества" << endl;
-  cout << "              Решето Эратосфена" << endl;
-  cout << "Введите верхнюю границу целых значений - ";
+  setlocale(lc_all, "russian");
+  cout << "тестирование программ поддержки множества" << endl;
+  cout << "              решето эратосфена" << endl;
+  cout << "введите верхнюю границу целых значений - ";
   cin  >> n;
-  TSet s(n + 1);
+  tset s(n + 1);
   // заполнение множества
   for (m = 2; m <= n; m++)
-    s.InsElem(m);
+    s.inselem(m);
   // проверка до sqrt(n) и удаление кратных
   for (m = 2; m * m <= n; m++)
     // если м в s, удаление кратных
-    if (s.IsMember(m))
+    if (s.ismember(m))
       for (k = 2 * m; k <= n; k += m)
-       if (s.IsMember(k))
-         s.DelElem(k);
+       if (s.ismember(k))
+         s.delelem(k);
   // оставшиеся в s элементы - простые числа
-  cout << endl << "Печать множества некратных чисел" << endl << s << endl;
-  cout << endl << "Печать простых чисел" << endl;
+  cout << endl << "печать множества некратных чисел" << endl << s << endl;
+  cout << endl << "печать простых чисел" << endl;
   count = 0;
   k = 1;
   for (m = 2; m <= n; m++)
-    if (s.IsMember(m))
+    if (s.ismember(m))
     {
       count++;
       cout << setw(3) << m << " ";
@@ -88,7 +88,7 @@ int main()
         cout << endl;
     }
   cout << endl;
-  cout << "В первых " << n << " числах " << count << " простых" << endl;
+  cout << "в первых " << n << " числах " << count << " простых" << endl;
 }
 
 #endif
