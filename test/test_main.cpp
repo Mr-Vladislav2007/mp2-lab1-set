@@ -168,3 +168,48 @@
 //
 //    return 0;
 //}
+
+
+
+
+//
+//#include <iostream>
+//#include "set.h"
+//using namespace std;
+//
+//void Sieve(int N)
+//{
+//    TSet primes(N + 1);
+//
+//    for (int i = 2; i <= N; ++i)
+//        primes.InsElem(i);
+//
+//    for (int i = 2; i * i <= N; ++i)
+//    {
+//        if (primes.IsMember(i))
+//        {
+//            for (int j = i * i; j <= N; j += i)
+//                primes.DelElem(j);
+//        }
+//    }
+//
+//    cout << "Prime numbers up to " << N << ": ";
+//    cout << primes << endl;
+//}
+//
+//int main()
+//{
+//    int N;
+//    cout << "Enter the upper bound N: ";
+//    cin >> N;
+//
+//    if (N < 2)
+//    {
+//        cout << "There are no prime numbers in the range." << endl;
+//        return 0;
+//    }
+//
+//    Sieve(N);
+//
+//    return 0;
+//}
